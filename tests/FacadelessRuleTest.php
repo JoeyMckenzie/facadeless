@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 use Facadeless\FacadelessConfiguration;
 use Facadeless\FacadelessRule;
-use Illuminate\Contracts\Auth\Factory as AuthFactory;
-use Illuminate\Contracts\Cache\Factory as CacheFactory;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Database\ConnectionInterface;
-use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
@@ -21,7 +17,6 @@ use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
-use Psr\Log\LoggerInterface;
 
 /**
  * @extends RuleTestCase<FacadelessRule>
@@ -107,7 +102,7 @@ final class FacadelessRuleTest extends RuleTestCase
             [
                 'Use of facade "Illuminate\Support\Facades\Route" is not allowed.',
                 14,
-                'Consider using dependency injection via the "Illuminate\Routing\Router" interface.',
+                'Consider using dependency injection via the "Illuminate\Contracts\Routing\Registrar" interface.',
             ],
         ]);
     }
@@ -124,9 +119,35 @@ final class FacadelessRuleTest extends RuleTestCase
         ]);
     }
 
+    #[Test]
+    public function returns_error_when_app_facade_detected(): void
+    {
+        $this->analyse([__DIR__.'/Fixtures/WithAppFacade.php'], [
+            [
+                'Use of facade "Illuminate\Support\Facades\App" is not allowed.',
+                14,
+                'Consider using dependency injection via the "Illuminate\Contracts\Foundation\Application" interface.',
+            ],
+        ]);
+    }
+
+    #[Test]
+    public function returns_error_when_artisan_facade_detected(): void
+    {
+        $this->analyse([__DIR__.'/Fixtures/WithArtisanFacade.php'], [
+            [
+                'Use of facade "Illuminate\Support\Facades\Artisan" is not allowed.',
+                14,
+                'Consider using dependency injection via the "Illuminate\Contracts\Console\Kernel" interface.',
+            ],
+        ]);
+    }
+
     protected function getRule(): Rule
     {
         $bannedFacades = [
+            App::class,
+            Artisan::class,
             Log::class,
             Auth::class,
             DB::class,
@@ -137,13 +158,15 @@ final class FacadelessRuleTest extends RuleTestCase
         ];
 
         $facadeMap = [
-            Log::class => LoggerInterface::class,
-            Auth::class => AuthFactory::class,
-            DB::class => ConnectionInterface::class,
-            Cache::class => CacheFactory::class,
-            Config::class => ConfigRepository::class,
-            Route::class => Router::class,
-            Event::class => Dispatcher::class,
+            App::class => Illuminate\Contracts\Foundation\Application::class,
+            Artisan::class => Illuminate\Contracts\Console\Kernel::class,
+            Log::class => Psr\Log\LoggerInterface::class,
+            Auth::class => Illuminate\Contracts\Auth\Factory::class,
+            DB::class => Illuminate\Database\ConnectionInterface::class,
+            Cache::class => Illuminate\Contracts\Cache\Factory::class,
+            Config::class => Illuminate\Contracts\Config\Repository::class,
+            Route::class => Illuminate\Contracts\Routing\Registrar::class,
+            Event::class => Illuminate\Contracts\Events\Dispatcher::class,
         ];
 
         $config = new FacadelessConfiguration($bannedFacades, $facadeMap);

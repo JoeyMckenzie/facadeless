@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fixtures;
+namespace Tests\Fixtures;
 
 use Illuminate\Support\Facades\Log;
 use Tests\FacadelessAbstractTestFixture;

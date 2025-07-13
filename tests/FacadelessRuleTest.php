@@ -2,17 +2,10 @@
 
 declare(strict_types=1);
 
+namespace Tests;
+
 use Facadeless\FacadelessConfiguration;
 use Facadeless\FacadelessRule;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -145,31 +138,7 @@ final class FacadelessRuleTest extends RuleTestCase
 
     protected function getRule(): Rule
     {
-        $bannedFacades = [
-            App::class,
-            Artisan::class,
-            Log::class,
-            Auth::class,
-            DB::class,
-            Cache::class,
-            Config::class,
-            Route::class,
-            Event::class,
-        ];
-
-        $facadeMap = [
-            App::class => Illuminate\Contracts\Foundation\Application::class,
-            Artisan::class => Illuminate\Contracts\Console\Kernel::class,
-            Log::class => Psr\Log\LoggerInterface::class,
-            Auth::class => Illuminate\Contracts\Auth\Factory::class,
-            DB::class => Illuminate\Database\ConnectionInterface::class,
-            Cache::class => Illuminate\Contracts\Cache\Factory::class,
-            Config::class => Illuminate\Contracts\Config\Repository::class,
-            Route::class => Illuminate\Contracts\Routing\Registrar::class,
-            Event::class => Illuminate\Contracts\Events\Dispatcher::class,
-        ];
-
-        $config = new FacadelessConfiguration($bannedFacades, $facadeMap);
+        $config = FacadelessTestConfigurationFactory::make();
 
         return new FacadelessRule($config);
     }

@@ -10,6 +10,7 @@ use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Database\ConnectionInterface;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Psr\Log\LoggerInterface;
@@ -36,6 +38,7 @@ final readonly class FacadelessTestConfigurationFactory
             Config::class,
             DB::class,
             Event::class,
+            File::class,
             Log::class,
             Route::class,
         ];
@@ -48,6 +51,7 @@ final readonly class FacadelessTestConfigurationFactory
             Config::class => Repository::class,
             DB::class => ConnectionInterface::class,
             Event::class => Dispatcher::class,
+            File::class => Filesystem::class,
             Log::class => LoggerInterface::class,
             Route::class => Registrar::class,
         ];

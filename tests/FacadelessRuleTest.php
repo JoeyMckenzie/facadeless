@@ -65,6 +65,18 @@ final class FacadelessRuleTest extends RuleTestCase
     }
 
     #[Test]
+    public function returns_error_when_file_facade_detected(): void
+    {
+        $this->analyse([__DIR__.'/Fixtures/WithFileFacade.php'], [
+            [
+                'Use of facade "Illuminate\Support\Facades\File" is not allowed.',
+                14,
+                'Consider using dependency injection via the "Illuminate\Contracts\Filesystem\Filesystem" interface.',
+            ],
+        ]);
+    }
+
+    #[Test]
     public function returns_error_when_cache_facade_detected(): void
     {
         $this->analyse([__DIR__.'/Fixtures/WithCacheFacade.php'], [

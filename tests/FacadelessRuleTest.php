@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 use Facadeless\FacadelessConfiguration;
 use Facadeless\FacadelessRule;
+use Illuminate\Contracts\Auth\Factory;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
+use Psr\Log\LoggerInterface;
 
 /**
  * @extends RuleTestCase<FacadelessRule>
@@ -37,14 +41,28 @@ final class FacadelessRuleTest extends RuleTestCase
         ]);
     }
 
+    #[Test]
+    public function returns_error_when_auth_facade_detected(): void
+    {
+        $this->analyse([__DIR__.'/Fixtures/WithAuthFacade.php'], [
+            [
+                'Use of facade "Illuminate\Support\Facades\Auth" is not allowed.',
+                14,
+                'Consider using dependency injection via the "Illuminate\Contracts\Auth\Factory" interface.',
+            ],
+        ]);
+    }
+
     protected function getRule(): Rule
     {
         $bannedFacades = [
-            Illuminate\Support\Facades\Log::class,
+            Log::class,
+            Auth::class,
         ];
 
         $facadeMap = [
-            Illuminate\Support\Facades\Log::class => Psr\Log\LoggerInterface::class,
+            Log::class => LoggerInterface::class,
+            Auth::class => Factory::class,
         ];
 
         $config = new FacadelessConfiguration($bannedFacades, $facadeMap);

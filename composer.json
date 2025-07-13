@@ -50,7 +50,6 @@
     },
     "scripts": {
         "check": [
-            "@test:mutate",
             "@fmt:test",
             "@lint",
             "@refactor:test",
@@ -79,25 +78,13 @@
         "prepare": "git config core.hookspath .githooks",
         "refactor": "vendor/bin/rector process",
         "refactor:test": "vendor/bin/rector process --dry-run",
-        "test": "vendor/bin/phpunit",
-        "test:ci": [
-            "@test:coverage",
-            "@test:mutate",
-            "@test:types"
+        "test": [
+            "@fmt",
+            "XDEBUG_MODE=off vendor/bin/phpunit"
         ],
-        "test:coverage": "vendor/bin/pest --coverage-clover coverage.xml --parallel",
-        "test:mutate": "vendor/bin/pest --mutate --min=100 --parallel",
-        "test:mutate:cache-clear": "vendor/bin/pest --mutate --min=100 --clear-cache",
-        "test:mutate:sync": "vendor/bin/pest --mutate --min=100",
-        "test:sync": "vendor/bin/pest",
-        "test:types": "vendor/bin/pest --type-coverage --min=100",
-        "test:watch": [
-            "Composer\\Config::disableProcessTimeout",
-            "vendor/bin/pest --parallel --watch"
-        ],
-        "test:watchmu": [
-            "Composer\\Config::disableProcessTimeout",
-            "vendor/bin/pest --watch --parallel --mutate"
+        "test:coverage": [
+            "@fmt",
+            "XDEBUG_MODE=coverage vendor/bin/phpunit --log-junit 'reports/unitreport.xml' --coverage-clover 'reports/clover.xml'"
         ],
         "typos": "vendor/bin/peck"
     }

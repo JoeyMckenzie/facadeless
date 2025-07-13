@@ -1,0 +1,39 @@
+parameters:
+    facadeless:
+        bannedFacades:
+            - Illuminate\Support\Facades\DB
+            - Illuminate\Support\Facades\Log
+            - Illuminate\Support\Facades\Auth
+            - Illuminate\Support\Facades\Cache
+            - Illuminate\Support\Facades\Config
+            - Illuminate\Support\Facades\Route
+            - Illuminate\Support\Facades\Event
+
+        $correspondingFacadeContracts:
+            Illuminate\Support\Facades\DB: Illuminate\Database\ConnectionInterface
+            Illuminate\Support\Facades\Log: Psr\Log\LoggerInterface
+            Illuminate\Support\Facades\Auth: Illuminate\Contracts\Auth\Factory
+            Illuminate\Support\Facades\Cache: Illuminate\Contracts\Cache\Factory
+            Illuminate\Support\Facades\Config: Illuminate\Contracts\Config\Repository
+            Illuminate\Support\Facades\Route: Illuminate\Routing\Router
+            Illuminate\Support\Facades\Event: Illuminate\Contracts\Events\Dispatcher
+
+parametersSchema:
+    facadeless: structure([
+        bannedFacades: arrayOf(string()),
+        $correspondingFacadeContracts: map(string(), string())
+    ])
+
+services:
+    -
+        class: Facadeless\FacadelessConfiguration
+        arguments:
+            - %facadeless.bannedFacades%
+            - %facadeless.facadeToContractMap%
+
+    -
+        class: Facadeless\FacadelessRule
+        arguments:
+            - @Facadeless\FacadelessConfiguration
+        tags:
+            - phpstan.rules.rule

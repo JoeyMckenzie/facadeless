@@ -5,7 +5,7 @@
         <img src="https://img.shields.io/github/actions/workflow/status/joeymckenzie/facadeless/run-ci.yml?branch=main&label=ci" alt="ci" />
         <img src="https://img.shields.io/github/actions/workflow/status/joeymckenzie/facadeless/fix-php-code-style-issues.yml?branch=main&label=code%20style" alt="packgist downloads" />
         <img src="https://img.shields.io/packagist/dt/joeymckenzie/facadeless.svg" alt="packgist downloads" />
-        <img src="https://codecov.io/gh/JoeyMckenzie/facadeless/graph/badge.svg?token=9LZK1YDGKG"/> 
+        <img src="https://codecov.io/gh/JoeyMckenzie/facadeless/graph/badge.svg?token=9LZK1YDGKG" alt="code coverage badge" /> 
     </div>
 </div>
 
@@ -13,7 +13,7 @@
 
 # 🚫 Facadeless
 
-PHPStan plugin for enforcing facade rules within your Laravel projects.
+PHPStan plugin for banning the use of facades within your Laravel projects.
 
 ------
 

@@ -84,7 +84,7 @@
         ],
         "test:coverage": [
             "@fmt",
-            "XDEBUG_MODE=coverage vendor/bin/phpunit --log-junit 'reports/unitreport.xml' --coverage-clover 'reports/clover.xml'"
+            "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover coverage.xml"
         ],
         "typos": "vendor/bin/peck"
     }

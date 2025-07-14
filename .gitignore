@@ -14,3 +14,4 @@ node_modules
 --cache-result/
 reports
 example-app
+coverage.xml

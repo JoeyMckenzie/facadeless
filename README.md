@@ -15,9 +15,7 @@
 
 PHPStan plugin for banning the use of facades within your Laravel projects.
 
-------
-
-## Table of Contents
+g## Table of Contents
 
 - [Getting started](#getting-started)
 - [Usage](#usage)

@@ -59,7 +59,7 @@
             "@lint:ci",
             "@fmt:test",
             "@refactor:test",
-            "@test:ci",
+            "@test",
             "@typos"
         ],
         "fix": [

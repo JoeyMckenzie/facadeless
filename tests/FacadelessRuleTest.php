@@ -47,6 +47,30 @@ final class FacadelessRuleTest extends RuleTestCase
     }
 
     #[Test]
+    public function returns_error_when_auth_facade_detected(): void
+    {
+        $this->analyse([__DIR__.'/Fixtures/WithAuthFacade.php'], [
+            [
+                'Use of facade "Illuminate\Support\Facades\Auth" is not allowed.',
+                14,
+                'Consider using dependency injection via the "Illuminate\Contracts\Auth\Factory" interface.',
+            ],
+        ]);
+    }
+
+    #[Test]
+    public function returns_error_when_blade_facade_detected(): void
+    {
+        $this->analyse([__DIR__.'/Fixtures/WithBladeFacade.php'], [
+            [
+                'Use of facade "Illuminate\Support\Facades\Blade" is not allowed.',
+                14,
+                'Consider using dependency injection via the "Illuminate\View\Compilers\CompilerInterface" interface.',
+            ],
+        ]);
+    }
+
+    #[Test]
     public function returns_error_when_log_facade_detected(): void
     {
         $this->analyse([__DIR__.'/Fixtures/WithLoggingFacade.php'], [
@@ -64,18 +88,6 @@ final class FacadelessRuleTest extends RuleTestCase
                 'Use of facade "Illuminate\Support\Facades\Log" is not allowed.',
                 16,
                 'Consider using dependency injection via the "Psr\Log\LoggerInterface" interface.',
-            ],
-        ]);
-    }
-
-    #[Test]
-    public function returns_error_when_auth_facade_detected(): void
-    {
-        $this->analyse([__DIR__.'/Fixtures/WithAuthFacade.php'], [
-            [
-                'Use of facade "Illuminate\Support\Facades\Auth" is not allowed.',
-                14,
-                'Consider using dependency injection via the "Illuminate\Contracts\Auth\Factory" interface.',
             ],
         ]);
     }

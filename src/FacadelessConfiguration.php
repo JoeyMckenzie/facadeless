@@ -16,6 +16,7 @@ use Illuminate\Database\ConnectionInterface;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\Compilers\CompilerInterface;
 use Psr\Log\LoggerInterface;
 
 final readonly class FacadelessConfiguration
@@ -63,6 +65,7 @@ final readonly class FacadelessConfiguration
             App::class => Application::class,
             Artisan::class => Kernel::class,
             Auth::class => AuthFactory::class,
+            Blade::class => CompilerInterface::class,
             Cache::class => CacheFactory::class,
             Config::class => Repository::class,
             DB::class => ConnectionInterface::class,

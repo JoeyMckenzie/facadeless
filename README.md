@@ -21,14 +21,7 @@ PHPStan plugin for enforcing facade rules within your Laravel projects.
 
 - [Getting started](#getting-started)
 - [Usage](#usage)
-    - [Campaigns](#campaigns)
-    - [Campaign Members](#campaign-members)
-    - [Campaign Teams](#campaign-teams)
-    - [Contacts](#contacts)
-    - [Tickets](#tickets)
-    - [Transactions](#transactions)
-    - [Payouts](#payouts)
-    - [Funds](#funds)
+- [Configuration](#configuration)
 - [Testing](#testing)
 
 ## Getting started
@@ -49,6 +42,30 @@ If not, however, include the extension in your PHPStan configuration:
 includes:
   - vendor/joeymckenzie/facadeless/extension.neon
 ```
+
+## Configuration
+
+You may configure facadeless to ignore linting errors for any facade through the `allowedFacades` configuration key
+within your `phpstan.neon` file:
+
+```neon
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/joeymckenzie/facadeless/extension.neon
+
+parameters:
+    level: 5
+    paths:
+        - app/
+        - routes/
+    facadeless:
+        allowedFacades:
+            - Illuminate\Support\Facades\Route
+            - Illuminate\Support\Facades\Artisan
+```
+
+The configuration expects the fully qualified class name (FQCN) to the facade class. As exampled above, now anytime
+PHPStan analysis is run, it will bypass linting errors for the `Route` and `Artisan` facades.
 
 ## Reference
 

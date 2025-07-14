@@ -1,5 +1,5 @@
 {
-    "name": "joeymckenzie/phpstan-facadeless",
+    "name": "joeymckenzie/facadeless",
     "description": "PHPStan plugin for banning facades within Laravel projects.",
     "license": "MIT",
     "type": "library",
@@ -15,11 +15,11 @@
         }
     ],
     "require": {
-        "php": ">=8.4"
+        "php": ">=8.4",
+        "illuminate/contracts": "^12.0"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.47",
-        "illuminate/contracts": "^12.0",
         "laravel/framework": "^12.12",
         "laravel/pint": "^1.23",
         "peckphp/peck": "^0.1.3",

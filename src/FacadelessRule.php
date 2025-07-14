@@ -42,27 +42,28 @@ final readonly class FacadelessRule implements Rule
         /** @var class-string $className */
         $className = $scope->resolveName($node->class);
 
-        if ($this->config->isBanned($className)) {
-            $tip = 'Use a corresponding contract interface instead.';
-            $suggested = $this->config->getSuggestedContract($className);
-
-            if ($suggested !== null) {
-                $tip = sprintf('Consider using dependency injection via the "%s" interface.', $suggested);
-            }
-
-            try {
-                return [
-                    RuleErrorBuilder::message(
-                        sprintf('Use of facade "%s" is not allowed.', $className),
-                    )
-                        ->tip($tip)
-                        ->build(),
-                ];
-            } catch (ShouldNotHappenException $e) {
-                throw FacadelessException::withFacade($className, $e);
-            }
+        if ($this->config->isAllowed($className)) {
+            return [];
         }
 
-        return [];
+        $tip = 'Use a corresponding contract interface instead.';
+        $suggested = $this->config->getSuggestedContract($className);
+
+        if ($suggested !== null) {
+            $tip = sprintf('Consider using dependency injection via the "%s" interface.', $suggested);
+        }
+
+        try {
+            return [
+                RuleErrorBuilder::message(
+                    sprintf('Use of facade "%s" is not allowed.', $className),
+                )
+                    ->tip($tip)
+                    ->identifier('facade.banned')
+                    ->build(),
+            ];
+        } catch (ShouldNotHappenException $e) {
+            throw FacadelessException::withFacade($className, $e);
+        }
     }
 }

@@ -1,3 +1,6 @@
+includes:
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
+
 parameters:
     level: max
     paths:
@@ -5,8 +8,3 @@ parameters:
         - tests
     tmpDir: build/phpstan
     reportUnmatchedIgnoredErrors: true
-    ignoreErrors:
-        -
-            message: '#Method Facadeless\\FacadelessRule::processNode\(\) should return list<PHPStan\\Rules\\IdentifierRuleError> but returns array{PHPStan\\Rules\\TipRuleError}.#'
-            paths:
-                - src/FacadelessRule.php

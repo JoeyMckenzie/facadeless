@@ -6,6 +6,8 @@ namespace Tests;
 
 use Facadeless\FacadelessConfiguration;
 use Facadeless\FacadelessRule;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -18,6 +20,32 @@ use PHPUnit\Framework\Attributes\Test;
 #[CoversClass(FacadelessConfiguration::class)]
 final class FacadelessRuleTest extends RuleTestCase
 {
+    private FacadelessRule $rule;
+
+    protected function setUp(): void
+    {
+        $config = new FacadelessConfiguration;
+        $this->rule = new FacadelessRule($config);
+    }
+
+    #[Test]
+    public function returns_no_errors_for_allowed_facades(): void
+    {
+        $config = new FacadelessConfiguration([
+            Log::class,
+            Config::class,
+        ]);
+        $this->rule = new FacadelessRule($config);
+
+        $this->analyse([__DIR__.'/Fixtures/WithAllowedFacades.php'], [
+            [
+                'Use of facade "Illuminate\Support\Facades\DB" is not allowed.',
+                21,
+                'Consider using dependency injection via the "Illuminate\Database\ConnectionInterface" interface.',
+            ],
+        ]);
+    }
+
     #[Test]
     public function returns_error_when_log_facade_detected(): void
     {
@@ -150,8 +178,6 @@ final class FacadelessRuleTest extends RuleTestCase
 
     protected function getRule(): Rule
     {
-        $config = FacadelessTestConfigurationFactory::make();
-
-        return new FacadelessRule($config);
+        return $this->rule;
     }
 }

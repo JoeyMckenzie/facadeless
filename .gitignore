@@ -13,5 +13,4 @@ node_modules
 .env
 --cache-result/
 reports
-example-app
 coverage.xml

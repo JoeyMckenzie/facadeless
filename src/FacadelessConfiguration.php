@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Facadeless;
 
-use Illuminate\Contracts\Auth\Factory as AuthFactory;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Contracts\Broadcasting\Broadcaster;
+use Illuminate\Contracts\Bus\Dispatcher as BusDispatcher;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\Registrar;
-use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +44,7 @@ final readonly class FacadelessConfiguration
     public function __construct(
         private array $allowedFacades = [],
     ) {
-        $this->correspondingFacadeContracts = $this->getFacadeMapping();
+        $this->correspondingFacadeContracts = $this->getFacadeToContractMapping();
     }
 
     public function isAllowed(string $className): bool
@@ -59,17 +63,19 @@ final readonly class FacadelessConfiguration
     /**
      * @return array<class-string, class-string>
      */
-    private function getFacadeMapping(): array
+    private function getFacadeToContractMapping(): array
     {
         return [
             App::class => Application::class,
             Artisan::class => Kernel::class,
-            Auth::class => AuthFactory::class,
+            Auth::class => AuthManager::class,
             Blade::class => CompilerInterface::class,
+            Broadcast::class => Broadcaster::class,
+            Bus::class => BusDispatcher::class,
             Cache::class => CacheFactory::class,
             Config::class => Repository::class,
-            DB::class => ConnectionInterface::class,
-            Event::class => Dispatcher::class,
+            DB::class => ConnectionResolverInterface::class,
+            Event::class => EventDispatcher::class,
             File::class => Filesystem::class,
             Log::class => LoggerInterface::class,
             Route::class => Registrar::class,

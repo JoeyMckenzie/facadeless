@@ -16,18 +16,18 @@ use Tests\Concerns\TestsFacadelessRule;
  */
 #[CoversClass(FacadelessRule::class)]
 #[CoversClass(FacadelessConfiguration::class)]
-final class DBFacadeTest extends RuleTestCase
+final class BusFacadeTest extends RuleTestCase
 {
     use TestsFacadelessRule;
 
     #[Test]
-    public function returns_error_when_db_facade_detected(): void
+    public function returns_error_when_blade_facade_detected(): void
     {
-        $this->analyse([__DIR__.'/../Fixtures/WithDBFacade.php'], [
+        $this->analyse([__DIR__.'/../Fixtures/WithBusFacade.php'], [
             [
-                'Use of facade "Illuminate\Support\Facades\DB" is not allowed.',
+                'Use of facade "Illuminate\Support\Facades\Bus" is not allowed.',
                 22,
-                'Consider using dependency injection via the "Illuminate\Database\ConnectionResolverInterface" interface.',
+                'Consider using dependency injection via the "Illuminate\Contracts\Bus\Dispatcher" interface.',
             ],
         ]);
     }

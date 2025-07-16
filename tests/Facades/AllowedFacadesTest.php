@@ -27,7 +27,7 @@ final class AllowedFacadesTest extends RuleTestCase
             [
                 'Use of facade "Illuminate\Support\Facades\DB" is not allowed.',
                 21,
-                'Consider using dependency injection via the "Illuminate\Database\ConnectionInterface" interface.',
+                'Consider using dependency injection via the "Illuminate\Database\ConnectionResolverInterface" interface.',
             ],
         ]);
     }

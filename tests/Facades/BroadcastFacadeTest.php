@@ -16,17 +16,22 @@ use Tests\Concerns\TestsFacadelessRule;
  */
 #[CoversClass(FacadelessRule::class)]
 #[CoversClass(FacadelessConfiguration::class)]
-final class DBFacadeTest extends RuleTestCase
+final class BroadcastFacadeTest extends RuleTestCase
 {
     use TestsFacadelessRule;
 
     #[Test]
-    public function returns_error_when_db_facade_detected(): void
+    public function returns_error_when_blade_facade_detected(): void
     {
-        $this->analyse([__DIR__.'/../Fixtures/WithDBFacade.php'], [
+        $this->analyse([__DIR__.'/../Fixtures/WithBroadcastFacade.php'], [
+            [
+                'Use of facade "Illuminate\Support\Facades\Broadcast" is not allowed.',
+                23,
+                'Consider using dependency injection via the "Illuminate\Contracts\Broadcasting\Broadcaster" interface.',
+            ],
             [
                 'Use of facade "Illuminate\Support\Facades\DB" is not allowed.',
-                22,
+                25,
                 'Consider using dependency injection via the "Illuminate\Database\ConnectionResolverInterface" interface.',
             ],
         ]);

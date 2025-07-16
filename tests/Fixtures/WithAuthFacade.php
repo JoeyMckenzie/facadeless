@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Fixtures;
 
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Facades\Auth;
 use Tests\FacadelessAbstractTestFixture;
 
 final class WithAuthFacade extends FacadelessAbstractTestFixture
 {
     public function __construct(
-        private readonly Guard $auth
+        private readonly AuthManager $auth
     ) {
         //
     }

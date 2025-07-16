@@ -27,7 +27,7 @@ final class AuthFacadeTest extends RuleTestCase
             [
                 'Use of facade "Illuminate\Support\Facades\Auth" is not allowed.',
                 22,
-                'Consider using dependency injection via the "Illuminate\Contracts\Auth\Factory" interface.',
+                'Consider using dependency injection via the "Illuminate\Auth\AuthManager" interface.',
             ],
         ]);
     }

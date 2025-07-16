@@ -10,6 +10,7 @@ use Illuminate\Contracts\Bus\Dispatcher as BusDispatcher;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Contracts\Cookie\QueueingFactory;
 use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Context;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
@@ -77,6 +79,7 @@ final readonly class FacadelessConfiguration
             Cache::class => CacheFactory::class,
             Config::class => ConfigRepository::class,
             Context::class => ContextRepository::class,
+            Cookie::class => QueueingFactory::class,
             DB::class => ConnectionResolverInterface::class,
             Event::class => EventDispatcher::class,
             File::class => Filesystem::class,

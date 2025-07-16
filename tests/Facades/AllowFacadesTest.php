@@ -18,7 +18,7 @@ use PHPUnit\Framework\Attributes\Test;
  */
 #[CoversClass(FacadelessRule::class)]
 #[CoversClass(FacadelessConfiguration::class)]
-final class AllowedFacadesTest extends RuleTestCase
+final class AllowFacadesTest extends RuleTestCase
 {
     #[Test]
     public function returns_no_errors_for_allowed_facades(): void

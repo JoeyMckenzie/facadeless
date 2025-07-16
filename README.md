@@ -43,7 +43,7 @@ includes:
 
 ## Configuration
 
-You may configure facadeless to ignore linting errors for any facade through the `allowedFacades` configuration key
+You may configure facadeless to ignore linting errors for any facade through the `allow` configuration key
 within your `phpstan.neon` file:
 
 ```neon
@@ -57,7 +57,7 @@ parameters:
         - app/
         - routes/
     facadeless:
-        allowedFacades:
+        allow:
             - Illuminate\Support\Facades\Route
             - Illuminate\Support\Facades\Artisan
 ```

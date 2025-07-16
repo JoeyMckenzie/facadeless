@@ -39,17 +39,17 @@ final readonly class FacadelessConfiguration
     private array $correspondingFacadeContracts;
 
     /**
-     * @param  class-string[]  $allowedFacades
+     * @param  class-string[]  $allow
      */
     public function __construct(
-        private array $allowedFacades = [],
+        private array $allow = [],
     ) {
         $this->correspondingFacadeContracts = $this->getFacadeToContractMapping();
     }
 
     public function isAllowed(string $className): bool
     {
-        return count($this->allowedFacades) > 0 && in_array($className, $this->allowedFacades, true);
+        return count($this->allow) > 0 && in_array($className, $this->allow, true);
     }
 
     /**

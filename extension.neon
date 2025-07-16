@@ -1,17 +1,17 @@
 parameters:
     facadeless:
-        allowedFacades: []
+        allow: []
 
 parametersSchema:
     facadeless: structure([
-        allowedFacades: arrayOf(string()),
+        allow: arrayOf(string()),
     ])
 
 services:
     -
         class: Facadeless\FacadelessConfiguration
         arguments:
-            - %facadeless.allowedFacades%
+            - %facadeless.allow%
 
     -
         class: Facadeless\FacadelessRule

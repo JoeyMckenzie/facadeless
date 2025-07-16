@@ -16,18 +16,18 @@ use Tests\Concerns\TestsFacadelessRule;
  */
 #[CoversClass(FacadelessRule::class)]
 #[CoversClass(FacadelessConfiguration::class)]
-final class ConfigFacadeTest extends RuleTestCase
+final class ContextFacadeTest extends RuleTestCase
 {
     use TestsFacadelessRule;
 
     #[Test]
-    public function returns_error_when_config_facade_detected(): void
+    public function returns_error_when_context_facade_detected(): void
     {
-        $this->analyse([__DIR__.'/../Fixtures/WithConfigFacade.php'], [
+        $this->analyse([__DIR__.'/../Fixtures/WithContextFacade.php'], [
             [
-                'Use of facade "Illuminate\Support\Facades\Config" is not allowed.',
+                'Use of facade "Illuminate\Support\Facades\Context" is not allowed.',
                 22,
-                'Consider using dependency injection via the "Illuminate\Contracts\Config\Repository" interface.',
+                'Consider using dependency injection via the "Illuminate\Log\Context\Repository" interface.',
             ],
         ]);
     }

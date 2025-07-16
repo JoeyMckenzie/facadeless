@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Facadeless;
 
+use Carbon\Factory as DateFactory;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Broadcasting\Broadcaster;
 use Illuminate\Contracts\Bus\Dispatcher as BusDispatcher;
@@ -29,6 +30,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
@@ -83,6 +85,7 @@ final readonly class FacadelessConfiguration
             Context::class => ContextRepository::class,
             Cookie::class => QueueingFactory::class,
             Crypt::class => Encrypter::class,
+            Date::class => DateFactory::class,
             DB::class => ConnectionResolverInterface::class,
             Event::class => EventDispatcher::class,
             File::class => Filesystem::class,

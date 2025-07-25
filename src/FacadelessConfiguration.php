@@ -18,6 +18,7 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Http\Client\Factory as HttpClientFactory;
 use Illuminate\Log\Context\Repository as ContextRepository;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
@@ -34,6 +35,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Compilers\CompilerInterface;
@@ -89,6 +91,7 @@ final readonly class FacadelessConfiguration
             DB::class => ConnectionResolverInterface::class,
             Event::class => EventDispatcher::class,
             File::class => Filesystem::class,
+            Http::class => HttpClientFactory::class,
             Log::class => LoggerInterface::class,
             Route::class => Registrar::class,
         ];
